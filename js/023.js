@@ -24,12 +24,30 @@ function sumDivs_n(n) {
 		}, -n));
 }
 
-console.log(_.map(_.range(1,29), function(n) {
-	return [n, sumDivs_n(n)]
-}));
-
 function solve1() {
+	var numArr = _.range(1,28124);
+	var abundants = _.filter(numArr, function(n) {
+		return sumDivs_n(n) > 0;
+	});
 
+	function isSumOfTwoAbundants(n) {
+		for (var i = 0, l = abundants.length; i < l; i++) {
+			var no1 = abundants[i];
+			if (no1 > n) return false;
+			for (var j = i; j < l; j++) {
+				var no2 = abundants[j];
+				if (no1 + no2 === n) return true;
+			}
+		}
+		return false;
+	}
+
+	return _.reduce(_.filter(numArr, function(n) {
+		if (n % 2000 === 0) console.log(n);
+		return !isSumOfTwoAbundants(n);
+	}), function(a,b) {
+		return a+b;
+	}, 0);
 }
 
 console.log("# # # # # # # # # # # # # # # # # # # # 023 # # # # # # # # # # # # # # # # # # # #");

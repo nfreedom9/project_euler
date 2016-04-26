@@ -24,17 +24,11 @@
 
 function F(n) {
 	if (F.cache[n]) return F.cache[n];
-
-	var result = sumArr(F(n - 1), F(n - 2));
-	F.cache[n] = result;
-
-	return result;
+	return F.cache[n] = sumArr(F(n - 1), F(n - 2));
 }
+F.cache = { '1': [1], '2': [1] };
 
-F.cache = {
-	'1': [1],
-	'2': [1]
-};
+console.log(F(12));
 
 function sumArr(arr1, arr2) {
 	var len1 = arr1.length, len2 = arr2.length, arr = [], i, len = len1 > len2 ? len1 : len2;
@@ -66,11 +60,7 @@ function solve(digit) {
 	}
 }
 
-console.log(solve(3)); // 12
-console.log(solve(1000)); // 4782
-
-
-(function(digit) {
+function solve1(digit) {
 	var prevTerm = [1];
 	var currTerm = [1];
 	var currIndex = 2;
@@ -96,6 +86,15 @@ console.log(solve(1000)); // 4782
 		currIndex++;
 		//console.log([currIndex, '/', currTerm].join(' '));
 	} while (currTerm.length < digit);
-	console.log('Answer: ' + currIndex);
-})(1000);
+	return currIndex;
+}
 
+console.log("# # # # # # # # # # # # # # # # # # # # 025 # # # # # # # # # # # # # # # # # # # #");
+
+(function(time) {
+	console.log('m: ' + solve(1000) + ' / ' + (new Date() - time));
+})(new Date());
+
+(function(time) {
+	console.log('1: ' + solve1(1000) + ' / ' + (new Date() - time));
+})(new Date());
