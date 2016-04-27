@@ -20,39 +20,28 @@ var fn = require("./fn"),
  */
 
 function unitFraction(denominator) {
-	function trans(no) {
-		if (!no) return 0;
-		for (;;) {
-			if (no >= denominator) return no;
-			info.push(0);
-			no *= 10;
-		}
-	}
-	var info = [];
-	var temp = trans(10);
+	var pij = 10, adds = [], pijs = [], result, nam;
 	for (;;) {
-		var add = parseInt(temp / denominator);
-		if (_.contains(info, add)) {
-			return (function(info, add) {
-				if (!add) return "0." + info.join("");
-				return _.reduce(info, function(str, n) {
-					if (n === add) return str + "(" + n;
-					return str + n;
-				}, "0.") + ")";
-			})(info, add);
+		result = parseInt(pij / denominator, 10);
+		nam = pij % denominator;
+		if (!nam) {
+			adds.push(result);
+			return "0."+adds.join("");
 		}
-		info.push(add);
-		temp = trans(10 * (temp % denominator));
+		if (_.contains(pijs, pij)) {
+			var _idx = pijs.indexOf(pij);
+			return _.reduce(adds, function(r, a, idx) {
+					if (idx == _idx) return r + "(" + a;
+					return r + a;
+				}, "0.") + ")";
+		}
+		adds.push(result);
+		pijs.push(pij);
+		pij = nam * 10;
 	}
 }
 
-console.log(_.map(_.range(2,20), function(n) { return ['1/'+n, recurringLength(unitFraction(n)), unitFraction(n), 1/n] }));
-
-//console.log(unitFraction(3).indexOf(')') - unitFraction(3).indexOf('('));
-//console.log(unitFraction(4).indexOf(')') - unitFraction(4).indexOf('('));
-//console.log(unitFraction(5).indexOf(')') - unitFraction(5).indexOf('('));
-//console.log(unitFraction(6).indexOf(')') - unitFraction(6).indexOf('('));
-//console.log(unitFraction(7).indexOf(')') - unitFraction(7).indexOf('('));
+//console.log(_.map(_.range(1,20), function(n) { return ['1/'+n, recurringCycle(n), recurringLength(unitFraction(n)), unitFraction(n), 1/n] }));
 
 function recurringLength(f) {
 	var i1 = f.indexOf('('), i2 = f.indexOf(')');
@@ -60,21 +49,48 @@ function recurringLength(f) {
 	return i2 - i1 - 1;
 }
 
-function solve() {
+console.log("# # # # # # # # # # # # # # # # # # # # 026 # # # # # # # # # # # # # # # # # # # #");
+
+function recurringCycle(d) {
+	return remainders(d, 10, []);
+}
+
+function remainders(d, r, rs) {
+	if (r === 0) return 0;
+	var r2 = r % d;
+	var idx = rs.indexOf(r2);
+	if (idx < 0) return remainders(d, 10*r2, [r2].concat(rs));
+	return idx + 1;
+}
+
+function solve0() {
 	function getInfo(n) {
-		var f = unitFraction(n), l = recurringLength(f);
-		return { n: n, f: f, l: l };
+		return { n: n, l: recurringLength(unitFraction(n)) };
 	}
 
 	var result = _.reduce(_.map(_.range(3,1000), getInfo), function(info, next) {
 		return info.l > next.l ? info : next;
 	}, getInfo(2));
 
-	return ["1/"+result.n, result.l, result.f, 1/result.n];
+	return result.n;
 }
 
-console.log("# # # # # # # # # # # # # # # # # # # # 026 # # # # # # # # # # # # # # # # # # # #");
+function solve1() {
+	function getInfo(n) {
+		return { n: n, l: recurringCycle(n) };
+	}
+
+	var result = _.reduce(_.map(_.range(3,1000), getInfo), function(info, next) {
+		return info.l > next.l ? info : next;
+	}, getInfo(2));
+
+	return result.n;
+}
 
 (function(time) {
-	console.log('m: ' + solve(1000) + ' / ' + (new Date() - time));
+	console.log('m: ' + solve0() + ' / ' + (new Date() - time));
+})(new Date());
+
+(function(time) {
+	console.log('1: ' + solve1() + ' / ' + (new Date() - time));
 })(new Date());
