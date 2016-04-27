@@ -1,30 +1,66 @@
+console.log("# # # # # # # # # # # # # # # # # # # # 027 # # # # # # # # # # # # # # # # # # # #");
+
 var fn = require("./fn"),
-	_ = fn._;
+	_ = fn._,
+	isPrime = fn.isPrime;
 
 /*
  27.
- A unit fraction contains 1 in the numerator. The decimal representation of the unit fractions with denominators 2 to 10 are given:
+ Euler discovered the remarkable quadratic formula:
 
- 1/2	= 	0.5
- 1/3	= 	0.(3)
- 1/4	= 	0.25
- 1/5	= 	0.2
- 1/6	= 	0.1(6)
- 1/7	= 	0.(142857)
- 1/8	= 	0.125
- 1/9	= 	0.(1)
- 1/10	= 	0.1
- Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle. It can be seen that 1/7 has a 6-digit recurring cycle.
+ n² + n + 41
 
- Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
+ It turns out that the formula will produce 40 primes for the consecutive values n = 0 to 39. However, when n = 40, 402 + 40 + 41 = 40(40 + 1) + 41 is divisible by 41, and certainly when n = 41, 41² + 41 + 41 is clearly divisible by 41.
+
+ The incredible formula  n² − 79n + 1601 was discovered, which produces 80 primes for the consecutive values n = 0 to 79. The product of the coefficients, −79 and 1601, is −126479.
+
+ Considering quadratics of the form:
+
+ n² + an + b, where |a| < 1000 and |b| < 1000
+
+ where |n| is the modulus/absolute value of n
+ e.g. |11| = 11 and |−4| = 4
+ Find the product of the coefficients, a and b, for the quadratic expression that produces the maximum number of primes for consecutive values of n, starting with n = 0.
  */
 
+function getPrimesCnt(a, b) {
+	function getPrime(n) {
+		return n * n + (a * n) + b;
+	}
+
+	for (var i = 0;;i++) {
+		if (!isPrime(getPrime(i))) return i;
+	}
+}
+
+console.log(getPrimesCnt(1,41)); // 40
+console.log(getPrimesCnt(-79,1601)); // 80
+
 function solve0() {
+	var result = [-999,-999], temp = getPrimesCnt(-999,-999);
+	var cnt = 0;
+	for (var a = -999; a < 1000; a++) {
+		for (var b = -999; b < 1000; b++) {
+			cnt++;
+			var primesCnt = getPrimesCnt(a,b);
+			if (primesCnt > temp) {
+				temp = primesCnt;
+				result = [a,b];
+			}
+		}
+	}
+	console.log(result, cnt);
+	return result[0] * result[1];
+}
+
+function solve1() {
 
 }
 
-console.log("# # # # # # # # # # # # # # # # # # # # 027 # # # # # # # # # # # # # # # # # # # #");
+(function(time) {
+	//console.log('0: ' + solve0() + ' / ' + (new Date() - time));
+})(new Date());
 
 (function(time) {
-	console.log('0: ' + solve0() + ' / ' + (new Date() - time));
+	console.log('1: ' + solve1() + ' / ' + (new Date() - time));
 })(new Date());
