@@ -24,14 +24,15 @@ function unitFraction(denominator) {
 		if (!no) return 0;
 		for (;;) {
 			if (no >= denominator) return no;
+			info.push(0);
 			no *= 10;
 		}
 	}
-	var temp = trans(1);
 	var info = [];
+	var temp = trans(10);
 	for (;;) {
 		var add = parseInt(temp / denominator);
-		if (!add || _.contains(info, add)) {
+		if (_.contains(info, add)) {
 			return (function(info, add) {
 				if (!add) return "0." + info.join("");
 				return _.reduce(info, function(str, n) {
@@ -41,11 +42,11 @@ function unitFraction(denominator) {
 			})(info, add);
 		}
 		info.push(add);
-		temp = trans(temp % denominator);
+		temp = trans(10 * (temp % denominator));
 	}
 }
 
-console.log(_.map(_.range(2,100), function(n) { return ['1/'+n, unitFraction(n), 1/n] }));
+console.log(_.map(_.range(2,20), function(n) { return ['1/'+n, recurringLength(unitFraction(n)), unitFraction(n), 1/n] }));
 
 //console.log(unitFraction(3).indexOf(')') - unitFraction(3).indexOf('('));
 //console.log(unitFraction(4).indexOf(')') - unitFraction(4).indexOf('('));
@@ -53,14 +54,23 @@ console.log(_.map(_.range(2,100), function(n) { return ['1/'+n, unitFraction(n),
 //console.log(unitFraction(6).indexOf(')') - unitFraction(6).indexOf('('));
 //console.log(unitFraction(7).indexOf(')') - unitFraction(7).indexOf('('));
 
+function recurringLength(f) {
+	var i1 = f.indexOf('('), i2 = f.indexOf(')');
+	if (i1 === -1) return 0;
+	return i2 - i1 - 1;
+}
+
 function solve() {
-	return _.reduce(_.range(3,1000), function(result, n) {
-		//console.log(result);
-		var fStr = unitFraction(n);
-		var fStr0 = unitFraction(result);
-		if (fStr.indexOf(')') - fStr.indexOf('(') > fStr0.indexOf(')') - fStr0.indexOf('(')) return n;
-		return result;
-	}, 2);
+	function getInfo(n) {
+		var f = unitFraction(n), l = recurringLength(f);
+		return { n: n, f: f, l: l };
+	}
+
+	var result = _.reduce(_.map(_.range(3,1000), getInfo), function(info, next) {
+		return info.l > next.l ? info : next;
+	}, getInfo(2));
+
+	return ["1/"+result.n, result.l, result.f, 1/result.n];
 }
 
 console.log("# # # # # # # # # # # # # # # # # # # # 026 # # # # # # # # # # # # # # # # # # # #");
