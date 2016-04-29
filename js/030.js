@@ -1,3 +1,8 @@
+console.log("# # # # # # # # # # # # # # # # # # # # 030 # # # # # # # # # # # # # # # # # # # #");
+
+var fn = require("./fn"),
+	_ = fn._;
+
 /*
  30.
  Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits:
@@ -26,36 +31,32 @@ function power5Of(n) {
 }
 
 (function() {
-	//return;
-	var str, i, j, sum, result = 0;
-	for (i = 2; i < 10000000; i++) {
+	var str, i, j, sum, result = [], l = power4Of(9) * 4;
+	for (i = 2; i <= l; i++) {
 		str = '' + i;
 		sum = 0;
 		for (j = 0; j < str.length; j++) {
-			sum += power5Of(str[j]);
+			sum += power4Of(parseInt(str[j], 10));
 		}
-		if (i === sum) {
-			console.log(i);
-			result += i;
-		}
+		if (i === sum) result.push(i);
 	}
 
 	console.log(result);
 })();
 
-console.log('## END ##');
+function solve0() {
+	var str, i, j, sum, result = [], l = power5Of(9) * 5;
+	for (i = 2; i <= l; i++) {
+		str = '' + i;
+		sum = 0;
+		for (j = 0; j < str.length; j++) {
+			sum += power5Of(parseInt(str[j], 10));
+		}
+		if (i === sum) result.push(i);
+	}
+	return _.reduce(result, function(a,b) { return a + b; }, 0);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+(function(time) {
+	console.log('0: ' + solve0() + ' / ' + (new Date() - time));
+})(new Date());

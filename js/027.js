@@ -29,7 +29,8 @@ function getPrimesCnt(a, b) {
 	}
 
 	for (var i = 0;;i++) {
-		if (!isPrime(getPrime(i))) return i;
+		var p = getPrime(i);
+		if (p < 0 || !isPrime(p)) return i;
 	}
 }
 
@@ -49,18 +50,9 @@ function solve0() {
 			}
 		}
 	}
-	console.log(result, cnt);
 	return result[0] * result[1];
 }
 
-function solve1() {
-
-}
-
 (function(time) {
-	//console.log('0: ' + solve0() + ' / ' + (new Date() - time));
-})(new Date());
-
-(function(time) {
-	console.log('1: ' + solve1() + ' / ' + (new Date() - time));
+	console.log('0: ' + solve0() + ' / ' + (new Date() - time));
 })(new Date());
