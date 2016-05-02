@@ -56,23 +56,6 @@ function int(n) {
 	return parseInt(n, 10);
 }
 /**
- * @param arr1
- * @param arr2
- * @returns {boolean} 두 배열의 공동 요소가 있는지 여부
- */
-function hasCommonElem(arr1, arr2) {
-	var i1, i2, l1, l2;
-	for (i1 = 0, l1 = arr1.length; i1 < l1; i1++) {
-		for (i2 = 0, l2 = arr2.length; i2 < l2; i2++) {
-			if (arr1[i1] === arr2[i2]) {
-				//console.log('arr1['+i1+'] === arr2['+i2+'] : ' + arr1[i1]);
-				return true;
-			}
-		}
-	}
-	return false;
-}
-/**
  * @param n
  * @returns {number} n 의 제곱근
  */

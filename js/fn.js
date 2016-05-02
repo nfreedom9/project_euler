@@ -204,4 +204,35 @@ fn.getPrimes = function(limit) {
 	return result;
 };
 
+/**
+ * @param arr1
+ * @param arr2
+ * @returns {boolean} 두 배열의 공동 요소가 있는지 여부
+ */
+fn.hasCommonElem = function(arr1, arr2) {
+	var i1, i2, l1 = arr1.length, l2 = arr2.length;
+	for (i1 = 0; i1 < l1; i1++) {
+		for (i2 = 0; i2 < l2; i2++) {
+			if (arr1[i1] === arr2[i2]) {
+				//console.log('arr1['+i1+'] === arr2['+i2+'] : ' + arr1[i1]);
+				return true;
+			}
+		}
+	}
+	return false;
+};
+
+fn.getCommonElem = function(arr1, arr2) {
+	var i1, i2, l1 = arr1.length, l2 = arr2.length;
+	for (i1 = 0; i1 < l1; i1++) {
+		for (i2 = 0; i2 < l2; i2++) {
+			if (arr1[i1] === arr2[i2]) {
+				//console.log('arr1['+i1+'] === arr2['+i2+'] : ' + arr1[i1]);
+				return arr1[i1];
+			}
+		}
+	}
+	return false;
+};
+
 module.exports = fn;
