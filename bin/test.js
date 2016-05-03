@@ -6,4 +6,7 @@ for (var j = 10; j < 33; j++) {
     require("../js/0" + j);
 }
 
+require("../js/031");
+require("../js/035");
+
 console.log("# # # # # # # # # # # # # # # # # # # # END # # # # # # # # # # # # # # # # # # # #");

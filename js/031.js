@@ -14,45 +14,49 @@ var fn = require("./fn"),
  How many different ways can £2 be made using any number of coins?
  */
 
-var dongs = [ 1, 2, 5, 10, 20, 50, 100, 200 ];
+function solve0() {
+	function ways(arr, n) {
+		if (!arr.length) {
+			return n === 0 ? 1 : 0;
+		}
 
-function h(iArr, addArr) {
-	//console.log('1111111111');
-	//console.log(iArr);
-	//console.log(addArr);
-	//console.log('1111111111');
-	var result = _.map(info[iArr[0]].slice(1,info[iArr[0]].length), function(arr) {
-		return arr.concat(addArr).sort().reverse();
-	});
-	if (iArr.length == 1) {
-		console.log(result);
+		var c = arr[0], cs = arr.slice(1), result = 0;
+
+		for (var i = 0; i <= parseInt(n/c,10); i++) {
+			result += ways(cs,(n - i * c));
+		}
 		return result;
 	}
 
-	return h(iArr.slice(1, iArr.length), h([iArr[0]], addArr));
+	return ways([1, 2, 5, 10, 20, 50, 100, 200], 200);
 }
 
-var info = {};
-info[1] = [[1]];
-info[2] = [[2],[1,1]];
-info[5] = [[5],[2,2,1]].concat(h([2],[2,1])).concat(h([2,2],[1]));
-info[10] = [[10],[5,5]].concat(h([5],[5])).concat(h([5,5],[]));
+function solve1() {
+	function ways(arr, n) {
+		if (!arr.length) {
+			return n === 0 ? 1 : 0;
+		}
 
-console.log(info);
+		//var cacheStr = "arr"+arr+"n"+n;
+		//if (ways.cache[cacheStr]) return ways.cache[cacheStr];
 
-function solve0(n) {
+		var c = arr[0], cs = arr.slice(1), result = 0;
 
+		for (var i = 0; i <= parseInt(n/c,10); i++) {
+			result += ways(cs,(n - i * c));
+		}
+		//return ways.cache[cacheStr] = result;
+		return result;
+	}
+	ways.cache = {};
+
+	return ways([1, 2, 5, 10, 20, 50, 100, 200], 200);
 }
-
-_.each(dongs, function(dong) {
-	console.log(solve0(dong));
-});
-
-var result = [
-	[200],
-
-	[100,100], [100,50,50], []];
 
 (function(time) {
 	console.log('0: ' + solve0() + ' / ' + (new Date() - time));
+})(new Date());
+
+(function(time) {
+	console.log('1: ' + solve1() + ' / ' + (new Date() - time));
 })(new Date());
