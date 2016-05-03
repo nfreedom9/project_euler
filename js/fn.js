@@ -235,4 +235,10 @@ fn.getCommonElem = function(arr1, arr2) {
 	return false;
 };
 
+fn.sumOfIntArr = function(intArr) {
+	return _.reduce(intArr, function(a,b) {
+		return a + b;
+	}, 0);
+};
+
 module.exports = fn;

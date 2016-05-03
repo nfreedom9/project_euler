@@ -1,11 +1,3 @@
-var printN = 1;
-function printR(s,r) {
-	var R = r || s, S = r ? (s + ": ") : "";
-	print(printN++ + "> " + S + R);
-}
-
-
-
 /**
  * @param number - 2 이상의 자연수
  * @returns {Array} - number 인수 배열

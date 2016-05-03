@@ -1,5 +1,4 @@
 /*
- 40.
  An irrational decimal fraction is created by concatenating the positive integers:
 
  0.123456789101112131415161718192021...
@@ -11,8 +10,8 @@
  d(1) × d(10) × d(100) × d(1000) × d(10000) × d(100000) × d(1000000)
  */
 
-(function() {
-	var str = (function () {
+function solve040() {
+	var d = (function () {
 		var str = '';
 		for (var i = 0;; i++) {
 			str += i;
@@ -20,5 +19,9 @@
 		}
 	})();
 
-	console.log(str[1] * str[10] * str[100] * str[1000] * str[10000] * str[100000] * str[1000000]);
-})();
+	return d[1] * d[10] * d[100] * d[1000] * d[10000] * d[100000] * d[1000000];
+}
+
+(function(time) {
+	console.log('     # 040: ' + solve040() + ' / ' + (new Date() - time));
+})(new Date());

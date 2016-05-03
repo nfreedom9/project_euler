@@ -1,14 +1,12 @@
-var fn = require("./fn"),
-	_ = fn._,
-	orify = fn.orify;
-
-console.log("# # # # # # # # # # # # # # # # # # # # 001 # # # # # # # # # # # # # # # # # # # #");
-
 /*
  If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.
  The sum of these multiples is 23.
  Find the sum of all the multiples of 3 or 5 below 1000.
  */
+
+var fn = require("./fn"),
+	_ = fn._,
+	orify = fn.orify;
 
 function isMultiplesOf(div) {
 	return function(number) {
@@ -29,7 +27,7 @@ function isOrMultiplesOf(divArr) {
 			return total;
 		}, 0);
 	}
-	console.log('m: ' + sum_multiplesOf([ 3, 5 ], 1000) + ' / ' + (new Date() - time));
+	console.log(' #001: ' + sum_multiplesOf([ 3, 5 ], 1000) + ' / ' + (new Date() - time));
 })(new Date());
 
 (function(time) {
@@ -40,7 +38,7 @@ function isOrMultiplesOf(divArr) {
 		}
 		return sum;
 	}
-	console.log('1: ' + solve1() + ' / ' + (new Date() - time));
+	console.log(' #001: ' + solve1() + ' / ' + (new Date() - time));
 })(new Date());
 
 (function(time) {
@@ -51,7 +49,7 @@ function isOrMultiplesOf(divArr) {
 		}
 		return sumDivisibleBy(3) + sumDivisibleBy(5) - sumDivisibleBy(15);
 	}
-	console.log('2: ' + solve2() + ' / ' + (new Date() - time));
+	console.log(' #001: ' + solve2() + ' / ' + (new Date() - time));
 })(new Date());
 
 (function(time) {
@@ -66,7 +64,7 @@ function isOrMultiplesOf(divArr) {
 			return total + n;
 		});
 	}
-	console.log('3: ' + solve3() + ' / ' + (new Date() - time));
+	console.log(' #001: ' + solve3() + ' / ' + (new Date() - time));
 })(new Date());
 
 (function(time) {
@@ -76,5 +74,5 @@ function isOrMultiplesOf(divArr) {
 			return isMultiplesOf(3)(num) || isMultiplesOf(5)(num);
 		}), fn.sum, 0);
 	}
-	console.log('4: ' + solve4() + ' / ' + (new Date() - time));
+	console.log(' #001: ' + solve4() + ' / ' + (new Date() - time));
 })(new Date());

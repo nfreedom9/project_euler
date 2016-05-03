@@ -1,12 +1,7 @@
-for (var i = 1; i < 10; i++) {
-    require("../js/00" + i);
-}
+var i;
 
-for (var j = 10; j < 33; j++) {
-    require("../js/0" + j);
+for (i = 1; i <= 5; i++) {
+	require(i < 10 ? "../js/00" + i : "../js/0" + i);
 }
-
-require("../js/031");
-require("../js/035");
 
 console.log("# # # # # # # # # # # # # # # # # # # # END # # # # # # # # # # # # # # # # # # # #");

@@ -1,11 +1,3 @@
-var fn = require("./fn"),
-	_ = fn._,
-	getPrimeFactorsWithCnt = fn.getPrimeFactorsWithCnt,
-	prime_sieve = fn.prime_sieve,
-	lcm = fn.lcm;
-
-console.log("# # # # # # # # # # # # # # # # # # # # 005 # # # # # # # # # # # # # # # # # # # #");
-
 /*
  2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
 
@@ -17,6 +9,12 @@ console.log("# # # # # # # # # # # # # # # # # # # # 005 # # # # # # # # # # # #
  [ 1, 2, 3, 2*2, 5, 2*3, 7, 2*2*2, 3*3, 2*5 ]
  2*2*2 * 3*3 * 5 * 7 = 2520
  */
+
+var fn = require("./fn"),
+	_ = fn._,
+	getPrimeFactorsWithCnt = fn.getPrimeFactorsWithCnt,
+	prime_sieve = fn.prime_sieve,
+	lcm = fn.lcm;
 
 var sample = 10, q = 20;
 
