@@ -5,74 +5,82 @@
  */
 
 var fn = require("./fn"),
-	_ = fn._,
-	orify = fn.orify;
+    _ = fn._,
+    orify = fn.orify,
+    sum = fn.sum;
 
-function isMultiplesOf(div) {
-	return function(number) {
-		return number % div == 0;
-	};
+function canDividedBy(div) {
+    return function (number) {
+        return number % div === 0;
+    };
 }
 
 function isOrMultiplesOf(divArr) {
-	return orify.apply(null, _.map(divArr, function(div) {
-		return isMultiplesOf(div);
-	}));
+    return orify.apply(null, _.map(divArr, canDividedBy));
 }
 
-(function(time) {
-	function sum_multiplesOf(divArr, max) {
-		return _.reduce(_.range(1, max), function(total, num) {
-			if (isOrMultiplesOf(divArr)(num)) return total + num;
-			return total;
-		}, 0);
-	}
-	console.log(' #001: ' + sum_multiplesOf([ 3, 5 ], 1000) + ' / ' + (new Date() - time));
+function sumDivisibleBy(n) {
+    var p = parseInt(999 / n);
+    return n * (p * (p + 1)) / 2;
+}
+
+function solve001_1() {
+    var sum = 0;
+    for (var i = 1; i < 1000; i++) {
+        if (!(i % 3) || !(i % 5)) sum += i;
+    }
+    return sum;
+}
+
+function solve001_2() {
+    return _.reduce(_.range(1, 1000), function (total, num) {
+        if (isOrMultiplesOf([3, 5])(num)) return total + num;
+        return total;
+    }, 0);
+}
+
+function solve001_3() {
+    return sumDivisibleBy(3) + sumDivisibleBy(5) - sumDivisibleBy(15);
+}
+
+function solve001_4() {
+    return (function tabulateFilterFold(upTo, filterFn, total, foldFn) {
+        if (!upTo) return total;
+        if (filterFn(upTo)) return tabulateFilterFold(upTo - 1, filterFn, foldFn(total, upTo), foldFn);
+        return tabulateFilterFold(upTo - 1, filterFn, total, foldFn);
+    })(999, isOrMultiplesOf([3, 5]), 0, sum);
+}
+
+function solve001_5() {
+    return _.reduce(_.filter(_.range(1, 1000), isOrMultiplesOf([3, 5])), sum, 0);
+}
+
+function solve001_6() {
+    return _.reduce(_.filter(_.range(1, 1000), function (num) {
+        return canDividedBy(3)(num) || canDividedBy(5)(num);
+    }), sum, 0);
+}
+
+(function (time) {
+    console.log(' # 001: ' + solve001_1() + ' / ' + (new Date() - time));
 })(new Date());
 
-(function(time) {
-	function solve1() {
-		var sum = 0;
-		for (var i = 1; i < 1000; i++) {
-			if (!(i % 3) || !(i % 5)) sum += i;
-		}
-		return sum;
-	}
-	console.log(' #001: ' + solve1() + ' / ' + (new Date() - time));
+(function (time) {
+    console.log(' # 001: ' + solve001_2() + ' / ' + (new Date() - time));
 })(new Date());
 
-(function(time) {
-	function solve2() {
-		function sumDivisibleBy(n) {
-			var p = parseInt(999 / n);
-			return n * (p * (p + 1)) / 2;
-		}
-		return sumDivisibleBy(3) + sumDivisibleBy(5) - sumDivisibleBy(15);
-	}
-	console.log(' #001: ' + solve2() + ' / ' + (new Date() - time));
+(function (time) {
+    console.log(' # 001: ' + solve001_3() + ' / ' + (new Date() - time));
 })(new Date());
 
-(function(time) {
-	function solve3() {
-		return (function tabulateFilterFold(upTo, filterFn, total, foldFn) {
-			if (!upTo) return total;
-			if (filterFn(upTo)) return tabulateFilterFold(upTo - 1, filterFn, foldFn(total, upTo), foldFn);
-			return tabulateFilterFold(upTo - 1, filterFn, total, foldFn);
-		})(999, function(n) {
-			return n % 3 === 0 || n % 5 === 0;
-		}, 0, function(total, n) {
-			return total + n;
-		});
-	}
-	console.log(' #001: ' + solve3() + ' / ' + (new Date() - time));
+(function (time) {
+    console.log(' # 001: ' + solve001_4() + ' / ' + (new Date() - time));
 })(new Date());
 
-(function(time) {
-	function solve4() {
-		return _.reduce(_.filter(_.range(1,1000), function(num) {
-			//return isOrMultiplesOf([3,5])(num);
-			return isMultiplesOf(3)(num) || isMultiplesOf(5)(num);
-		}), fn.sum, 0);
-	}
-	console.log(' #001: ' + solve4() + ' / ' + (new Date() - time));
+(function (time) {
+    console.log(' # 001: ' + solve001_5() + ' / ' + (new Date() - time));
+})(new Date());
+
+(function (time) {
+    console.log(' # 001: ' + solve001_6() + ' / ' + (new Date() - time));
 })(new Date());
