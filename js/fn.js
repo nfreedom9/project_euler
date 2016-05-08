@@ -7,9 +7,9 @@ fn.orify = function(/* predicates */) {
 	return function(/* args */) {
 		var args = _.toArray(arguments),
 			something = function(predicates, truth) {
-			if (_.isEmpty(predicates)) return truth;
-			return _.some(args, _.first(predicates)) || something(_.rest(predicates), truth);
-		};
+				if (_.isEmpty(predicates)) return truth;
+				return _.some(args, _.first(predicates)) || something(_.rest(predicates), truth);
+			};
 		return something(predicates, false);
 	};
 };

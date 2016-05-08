@@ -1,8 +1,6 @@
 var fn = require("./fn"),
 	isPalindrome = fn.isPalindrome;
 
-console.log("# # # # # # # # # # # # # # # # # # # # 004 # # # # # # # # # # # # # # # # # # # #");
-
 /*
  A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 
@@ -153,4 +151,26 @@ console.log("# # # # # # # # # # # # # # # # # # # # 004 # # # # # # # # # # # #
 	}
 
 	console.log('4: ' + solve4_2() + ' / ' + solve4_3() + ' / ' + (new Date() - time)); // 906609
+})(new Date());
+
+var q = 600851475143;
+
+(function (time) {
+	console.log('       # 004_1: ' + solve004_1(q) + ' / ' + (new Date() - time));
+})(new Date());
+
+(function (time) {
+	console.log('       # 004_2: ' + solve004_2(q) + ' / ' + (new Date() - time));
+})(new Date());
+
+(function (time) {
+	console.log('       # 004_3: ' + solve004_3(q) + ' / ' + (new Date() - time));
+})(new Date());
+
+(function (time) {
+	console.log('       # 004_4: ' + solve004_4(q) + ' / ' + (new Date() - time));
+})(new Date());
+
+(function (time) {
+	console.log('       # 004_5: ' + solve004_5(q) + ' / ' + (new Date() - time));
 })(new Date());
