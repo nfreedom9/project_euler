@@ -22,79 +22,49 @@
  What is the index of the first term in the Fibonacci sequence to contain 1000 digits?
  */
 
-function F(n) {
-	if (F.cache[n]) return F.cache[n];
-	return F.cache[n] = sumArr(F(n - 1), F(n - 2));
-}
-F.cache = { '1': [1], '2': [1] };
+var F = (function() {
+	var cache = { '1': [1], '2': [1] };
+	return function(n) {
+		return cache[n] || (cache[n] = sumArrInt(F(n - 1), F(n - 2)));
+	};
+})();
 
-console.log(F(12));
-
-function sumArr(arr1, arr2) {
-	var len1 = arr1.length, len2 = arr2.length, arr = [], i, len = len1 > len2 ? len1 : len2;
-
-	for (i = 0; i < len; i++) {
-		arr.push((arr1[i] || 0) + (arr2[i] || 0));
+function sumArrInt(currTerm, prevTerm) {
+	var nextTerm = [], carry = 0;
+	for (var i = 0; i < currTerm.length; i++) {
+		var sum = currTerm[i] + (prevTerm[i] || 0) + carry;
+		nextTerm[i] = sum % 10;
+		carry = Math.floor(sum / 10);
 	}
-
-	if (arr[len - 1] >= 10) {
-		arr.push(0);
-		len += 1;
-	}
-
-	for (i = 1; i < len; i++) {
-		temp = arr[i - 1];
-		if (temp >= 10) {
-			arr[i] += 1;
-			arr[i - 1] %= 10;
-		}
-	}
-
-	return arr;
+	if (carry) nextTerm[nextTerm.length] = carry;
+	return nextTerm;
 }
 
-function solve(digit) {
-	for (var i = 1; ; i++) {
-		var f = F(i);
-		if (f.length >= digit) return i;
-	}
+function solve025_1(digit) {
+	for (var i = 1; ; i++) if (F(i).length >= digit) return i;
 }
 
-function solve1(digit) {
-	var prevTerm = [1];
-	var currTerm = [1];
-	var currIndex = 2;
+function solve025_2(digit) {
+	var prevTerm = [1], currTerm = [1], currIndex = 2;
 	do {
 		var nextTerm = [];
 		var carry = 0;
 		for (var i = 0; i < currTerm.length; i++) {
-			var sum = currTerm[i] +
-				(
-					prevTerm[i] === undefined ?
-						0 :
-						prevTerm[i]
-				) +
-				carry;
+			var sum = currTerm[i] + (prevTerm[i] || 0) + carry;
 			nextTerm[i] = sum % 10;
 			carry = Math.floor(sum / 10);
 		}
-		if (carry) {
-			nextTerm[nextTerm.length] = carry;
-		}
+		if (carry) nextTerm[nextTerm.length] = carry;
 		prevTerm = currTerm;
 		currTerm = nextTerm;
 		currIndex++;
-		//console.log([currIndex, '/', currTerm].join(' '));
 	} while (currTerm.length < digit);
 	return currIndex;
 }
 
-console.log("# # # # # # # # # # # # # # # # # # # # 025 # # # # # # # # # # # # # # # # # # # #");
-
 (function(time) {
-	console.log('m: ' + solve(1000) + ' / ' + (new Date() - time));
+	console.log('         # 025_1: ' + solve025_1(1000) + ' / ' + (new Date() - time));
 })(new Date());
-
 (function(time) {
-	console.log('1: ' + solve1(1000) + ' / ' + (new Date() - time));
+	console.log('         # 025_2: ' + solve025_2(1000) + ' / ' + (new Date() - time));
 })(new Date());

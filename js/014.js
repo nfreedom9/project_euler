@@ -1,5 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 014 # # # # # # # # # # # # # # # # # # # #");
-
 /*
  14.
  The following iterative sequence is defined for the set of positive integers:
@@ -20,23 +18,19 @@ console.log("# # # # # # # # # # # # # # # # # # # # 014 # # # # # # # # # # # #
  */
 
 function nextSeq(n) {
-	if (n % 2) return 3 * n + 1;
-	return n / 2;
+	return n % 2 ? 3 * n + 1 : n / 2;
 }
 
-function getTermCountTo1(n) {
-	var result = 1, next = n, repeat = true;
-	while(repeat) {
-		next = nextSeq(next);
-		result++;
-		repeat = next !== 1;
-	}
-	return result;
-}
+function solve014_1() {
+	var getTermCountTo1 = (function() {
+		var cache = { '1': 1 };
+		return function(no) {
+			return cache[no] || (cache[no] = getTermCountTo1(nextSeq(no)) + 1);
+		};
+	})();
 
-function my(limit) {
 	var maxCnt = 1, i, curCnt, result;
-	for (i = 1; i < limit; i++) {
+	for (i = 1; i < 1000000; i++) {
 		curCnt = getTermCountTo1(i);
 		if (curCnt > maxCnt) {
 			maxCnt = curCnt;
@@ -46,6 +40,31 @@ function my(limit) {
 	return result;
 }
 
+function solve014_2() {
+	var indexBuffer = {}, maxCount = 0, result = 0, LIMIT = 1000000;
+
+	for (var i = LIMIT; i > 0; i--) {
+		if (indexBuffer[i]) continue;
+		var count = 0, num = i;
+		indexBuffer[num] = true;
+		while (true) {
+			num = nextSeq(num);
+			if (num < LIMIT) indexBuffer[num] = true;
+			count++;
+			if (num == 1) break;
+		}
+
+		if (maxCount < count) {
+			maxCount = count;
+			result = i;
+		}
+	}
+	return result;
+}
+
 (function(time) {
-	console.log('m: ' + getTermCountTo1(13) + ' / ' + my(1000000) + ' / ' + (new Date() - time));
+	console.log('       # 014_1: ' + solve014_1() + ' / ' + (new Date() - time));
+})(new Date());
+(function(time) {
+	console.log('       # 014_2: ' + solve014_2() + ' / ' + (new Date() - time));
 })(new Date());

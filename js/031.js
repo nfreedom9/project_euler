@@ -1,8 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 031 # # # # # # # # # # # # # # # # # # # #");
-
-var fn = require("./fn"),
-	_ = fn._;
-
 /*
  31.
  In England the currency is made up of pound, £, and pence, p, and there are eight coins in general circulation:
@@ -14,49 +9,18 @@ var fn = require("./fn"),
  How many different ways can £2 be made using any number of coins?
  */
 
-function solve0() {
-	function ways(arr, n) {
-		if (!arr.length) {
-			return n === 0 ? 1 : 0;
-		}
+function solve031_1() {
+	return (function ways(coins, val) {
+		if (!coins.length) return val === 0 ? 1 : 0;
 
-		var c = arr[0], cs = arr.slice(1), result = 0;
-
-		for (var i = 0; i <= parseInt(n/c,10); i++) {
-			result += ways(cs,(n - i * c));
+		var thisCoin = coins[0], maxCoinCnt = Math.floor(val / thisCoin), result = 0;
+		for (var thisCoinCnt = 0; thisCoinCnt <= maxCoinCnt; thisCoinCnt++) {
+			result += ways(coins.slice(1), (val - thisCoin * thisCoinCnt));
 		}
 		return result;
-	}
-
-	return ways([1, 2, 5, 10, 20, 50, 100, 200], 200);
-}
-
-function solve1() {
-	function ways(arr, n) {
-		if (!arr.length) {
-			return n === 0 ? 1 : 0;
-		}
-
-		//var cacheStr = "arr"+arr+"n"+n;
-		//if (ways.cache[cacheStr]) return ways.cache[cacheStr];
-
-		var c = arr[0], cs = arr.slice(1), result = 0;
-
-		for (var i = 0; i <= parseInt(n/c,10); i++) {
-			result += ways(cs,(n - i * c));
-		}
-		//return ways.cache[cacheStr] = result;
-		return result;
-	}
-	ways.cache = {};
-
-	return ways([1, 2, 5, 10, 20, 50, 100, 200], 200);
+	})([1, 2, 5, 10, 20, 50, 100, 200], 200);
 }
 
 (function(time) {
-	console.log('0: ' + solve0() + ' / ' + (new Date() - time));
-})(new Date());
-
-(function(time) {
-	console.log('1: ' + solve1() + ' / ' + (new Date() - time));
+	console.log(' # 031_1: ' + solve031_1() + ' / ' + (new Date() - time));
 })(new Date());

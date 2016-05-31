@@ -17,14 +17,12 @@ function getSet(length) {
 	return result;
 }
 
-function solve039() {
+function solve039_1() {
 	var result = 0;
-	for (var i = 120; i <= 1000; i++) {
-		if (getSet(i).length > getSet(result).length) result = i;
-	}
+	for (var i = 120; i <= 1000; i++) if (getSet(i).length > getSet(result).length) result = i;
 	return result;
 }
 
 (function(time) {
-	console.log('    # 039: ' + solve039() + ' / ' + (new Date() - time));
+	console.log('       # 039_1: ' + solve039_1() + ' / ' + (new Date() - time));
 })(new Date());

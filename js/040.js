@@ -10,10 +10,10 @@
  d(1) × d(10) × d(100) × d(1000) × d(10000) × d(100000) × d(1000000)
  */
 
-function solve040() {
-	var d = (function () {
+function solve040_1() {
+	var d = (function() {
 		var str = '';
-		for (var i = 0;; i++) {
+		for (var i = 0; ; i++) {
 			str += i;
 			if (str.length > 1000000) return str;
 		}
@@ -23,5 +23,5 @@ function solve040() {
 }
 
 (function(time) {
-	console.log('     # 040: ' + solve040() + ' / ' + (new Date() - time));
+	console.log('         # 040_1: ' + solve040_1() + ' / ' + (new Date() - time));
 })(new Date());

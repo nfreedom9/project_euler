@@ -53,7 +53,6 @@ fn.isPalindrome = function(number) {
  * @param number
  * @param arr - 재귀함수를 위한 배열. 최초실행시 입력 X
  * @returns {*|Array} - number 소인수와 그 각각의 지수
- * (ex) getPrimeFactorsWithCnt(2*2*3*3) => [ [ 2, 2 ], [ 3, 2 ] ]
  */
 var getPrimeFactorsWithCnt = fn.getPrimeFactorsWithCnt = function(number, arr) {
 	arr = arr || []; // arr 초기화
@@ -65,7 +64,7 @@ var getPrimeFactorsWithCnt = fn.getPrimeFactorsWithCnt = function(number, arr) {
 			cnt++;
 			number /= 2;
 		}
-		arr.push([2, cnt]);
+		arr.push({ factor: 2, count: cnt });
 		return getPrimeFactorsWithCnt(number, arr);
 	}
 
@@ -76,7 +75,7 @@ var getPrimeFactorsWithCnt = fn.getPrimeFactorsWithCnt = function(number, arr) {
 				cnt++;
 				number /= i;
 			}
-			arr.push([i, cnt]);
+			arr.push({ factor: i, count: cnt });
 			return getPrimeFactorsWithCnt(number, arr);
 		}
 	}
@@ -100,7 +99,7 @@ fn.prime_sieve = function(limit) {
  * @returns {boolean} - n이 소수인지 아닌지
  */
 var isPrime = fn.isPrime = function(n) {
-	if (n == 1) return false; // 1,
+	if (n < 2) return false; // 1,
 	if (n < 4) return true; // 2, 3,
 	if (n % 2 == 0) return false; // 4, 6, 8, 10, 12,,,2(k+1),,, k:1~
 	if (n < 9) return true; // 5, 7,
@@ -136,7 +135,7 @@ fn.lcm = function(n1, n2) {
  * @returns {number[]}
  */
 fn.getSquaredCoefficients = function(n) {
-	var result = [1,1];
+	var result = [1, 1];
 	for (var i = 1; i < n; i++) {
 		result = arrSum(result.concat([0]), [0].concat(result));
 	}
@@ -151,9 +150,55 @@ fn.trampoline = function(fun /*, args */) {
 	return result;
 };
 
-fn.sum = function(a, b) { return a + b; };
+fn.sum = function(a, b) {
+	return a + b;
+};
 
-var existy = function(x) { return x != null; };
+fn.mult = function(a, b) {
+	return a * b;
+};
+
+fn.sqr = function(n) {
+	return n * n;
+};
+
+fn.allSum = function(/* args */) {
+	return _.reduce(_.toArray(arguments), fn.sum, 0);
+};
+
+fn.allMult = function(/* args */) {
+	return _.reduce(_.toArray(arguments), fn.mult, 0);
+};
+
+fn.getNextPrime = function(thisPrime) {
+	if (thisPrime === 2) return 3;
+	for (var nextPrime = thisPrime + 2; ; nextPrime += 2) if (isPrime(nextPrime)) return nextPrime;
+};
+
+fn.repeatFun = function(fun, repeatCnt) {
+	return function(arg) {
+		if (!repeatCnt) return arg;
+		return fn.repeatFun(fun, repeatCnt - 1)(fun(arg));
+	};
+};
+
+fn.getNthPrime1 = function(N) {
+	if (N === 1) return 2;
+	return fn.repeatFun(fn.getNextPrime, N - 1)(2);
+};
+
+fn.getNthPrime2 = function(idx) {
+	var i = 0, j = 0;
+	while (j < idx) {
+		i += 1;
+		if (isPrime(i)) j += 1;
+	}
+	return i;
+};
+
+var existy = function(x) {
+	return x != null;
+};
 
 var cat = fn.cat = function() {
 	var head = _.first(arguments);
@@ -173,12 +218,15 @@ var isSquared = fn.isSquared = function(num) {
 	return sqrt === parseInt(sqrt, 10);
 };
 
+var fac = fn.fac = function(n) {
+	return !n ? 1 : n * fac(n - 1);
+};
+
 /**
  * @param number
  * @returns {number} - number 인수 갯수
  */
 fn.getFactorsCount = function(number) {
-	//return getFactors(number).length;
 	var result = 0, sqrt = Math.sqrt(number);
 	for (var i = 1; i < sqrt; i++) if (number % i === 0) result += 2;
 	return isSquared(number) ? result + 1 : result;
@@ -236,9 +284,7 @@ fn.getCommonElem = function(arr1, arr2) {
 };
 
 fn.sumOfIntArr = function(intArr) {
-	return _.reduce(intArr, function(a,b) {
-		return a + b;
-	}, 0);
+	return _.reduce(intArr, fn.sum, 0);
 };
 
 module.exports = fn;

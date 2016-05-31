@@ -58,15 +58,12 @@ function solve003_3(n) {
 }
 
 var q = 600851475143;
-
 (function (time) {
 	console.log('     # 003_1: ' + solve003_1(q) + ' / ' + (new Date() - time));
 })(new Date());
-
 (function (time) {
 	console.log('     # 003_2: ' + solve003_2(q) + ' / ' + (new Date() - time));
 })(new Date());
-
 (function (time) {
 	console.log('     # 003_3: ' + solve003_3(q) + ' / ' + (new Date() - time));
 })(new Date());

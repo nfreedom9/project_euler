@@ -1,8 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 030 # # # # # # # # # # # # # # # # # # # #");
-
-var fn = require("./fn"),
-	_ = fn._;
-
 /*
  30.
  Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits:
@@ -17,46 +12,19 @@ var fn = require("./fn"),
  Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
  */
 
-function p(k) {
-	return function(n) {
-		return Math.pow(n, k);
-	};
-}
+var _ = require("./fn")._;
 
-function power4Of(n) {
-	return p(4)(n);
-}
-function power5Of(n) {
-	return p(5)(n);
-}
-
-(function() {
-	var str, i, j, sum, result = [], l = power4Of(9) * 4;
-	for (i = 2; i <= l; i++) {
-		str = '' + i;
+function solve030_1(q) {
+	var noStr, sum, result = 0, max = Math.pow(9, q) * q;
+	for (var no = 2; no <= max; no++) {
+		noStr = '' + no;
 		sum = 0;
-		for (j = 0; j < str.length; j++) {
-			sum += power4Of(parseInt(str[j], 10));
-		}
-		if (i === sum) result.push(i);
+		for (var j = 0; j < noStr.length; j++) sum += Math.pow(parseInt(noStr[j], 10), q);
+		if (no === sum) result += no;
 	}
-
-	console.log(result);
-})();
-
-function solve0() {
-	var str, i, j, sum, result = [], l = power5Of(9) * 5;
-	for (i = 2; i <= l; i++) {
-		str = '' + i;
-		sum = 0;
-		for (j = 0; j < str.length; j++) {
-			sum += power5Of(parseInt(str[j], 10));
-		}
-		if (i === sum) result.push(i);
-	}
-	return _.reduce(result, function(a,b) { return a + b; }, 0);
+	return result;
 }
 
 (function(time) {
-	console.log('0: ' + solve0() + ' / ' + (new Date() - time));
+	console.log('         # 030_1: ' + solve030_1(4) + ' / ' + solve030_1(5) + ' / ' + (new Date() - time));
 })(new Date());

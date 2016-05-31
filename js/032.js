@@ -1,8 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 032 # # # # # # # # # # # # # # # # # # # #");
-
-var fn = require("./fn"),
-	_ = fn._;
-
 /*
  32.
  We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once; for example, the 5-digit number, 15234, is 1 through 5 pandigital.
@@ -14,37 +9,34 @@ var fn = require("./fn"),
  HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
  */
 
-function solve0() {
+var _ = require("./fn")._;
+
+function solve032_1() {
 	function isPandigital(str) {
-		var arr = ['1','2','3','4','5','6','7','8','9'];
-		for (var i = 0; i < 9; i++) {
-			if (str.indexOf(arr[i]) < 0) return false;
-		}
+		for (var i = 1; i < 10; i++) if (str.indexOf("" + i) < 0) return false;
 		return true;
 	}
 
-	function checkB(a, As, Bs, Cs) {
-		for (var b = 1;; b++) {
-			var c = a * b, str = ""+a+b+c;
-			if (str.length < 9) continue;
-			if (str.length === 9 && isPandigital(str) && Cs.indexOf(c) < 0) {
-				// console.log(""+a+" * "+b+" = "+c);
-				As.push(a);
-				Bs.push(b);
-				Cs.push(c);
-			}
+	function getPandigital(a) {
+		for (var b = 1; ; b++) {
+			var c = a * b, str = "" + a + b + c;
 			if (str.length > 9) return;
+			if (!isPandigital(str)) continue;
+			//console.log(a + " * " + b + " = " + c, "    "+str.split("").sort());
+			return c;
 		}
 	}
-	var As = [], Bs = [], Cs = [];
+
+	var pandigitals = [], result = 0;
 	for (var a = 1; a < 31624; a++) {
-		checkB(a, As, Bs, Cs);
+		var pandigital = getPandigital(a);
+		if (!pandigital || pandigitals.indexOf(pandigital) >= 0) continue;
+		pandigitals.push(pandigital);
+		result += pandigital;
 	}
-	return _.reduce(Cs, function(a,b) {
-		return a + b;
-	}, 0);
+	return result;
 }
 
 (function(time) {
-	console.log('0: ' + solve0() + ' / ' + (new Date() - time));
+	console.log('   # 032_1: ' + solve032_1() + ' / ' + (new Date() - time));
 })(new Date());

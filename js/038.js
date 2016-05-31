@@ -14,9 +14,7 @@
 function isPandigital(n) {
 	var strN = n + "";
 	if (strN.length !== 9) return false;
-	for (var i = 1; i < 10; i++) {
-		if (strN.indexOf(i+"") < 0) return false;
-	}
+	for (var i = 1; i < 10; i++) if (strN.indexOf(i+"") < 0) return false;
 	return true;
 }
 
@@ -28,7 +26,7 @@ function concatenatedProduct(N) {
 	}
 }
 
-function solve038() {
+function solve038_1() {
 	var result = 0;
 	for (var i = 1; i < 9999 ; i++) {
 		var cp = concatenatedProduct(i);
@@ -38,5 +36,5 @@ function solve038() {
 }
 
 (function(time) {
-	console.log('   # 038: ' + solve038() + ' / ' + (new Date() - time));
+	console.log('     # 038_1: ' + solve038_1() + ' / ' + (new Date() - time));
 })(new Date());

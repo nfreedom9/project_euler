@@ -1,9 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 035 # # # # # # # # # # # # # # # # # # # #");
-
-var fn = require("./fn"),
-	_ = fn._,
-	isPrime = fn.isPrime;
-
 /*
  35.
  The number, 197, is called a circular prime because all rotations of the digits: 197, 971, and 719, are themselves prime.
@@ -13,38 +7,33 @@ var fn = require("./fn"),
  How many circular primes are there below one million?
  */
 
+var fn = require("./fn"),
+	isPrime = fn.isPrime;
+
 function lastToFirst(n) {
 	var strArr = ('' + n).split('');
 	return parseInt([strArr.pop()].concat(strArr).join(''), 10);
 }
 
-function getCircularNumbers(n) {
-	var result = [], i = n;
-	for (;;) {
-		result.push(i);
+function isCircularPrime(n) {
+	// 0이 포함된 경우 조건을 만족하지 못할 뿐 아니라 getCircularNumbers 실행시 문제가 되기도 한다.
+	if (('' + n).split('').indexOf('0') > -1) return false;
+	var i = n;
+	for (; ;) {
+		if (!isPrime(i)) return false;
 		i = lastToFirst(i);
-		if (i === n) return result;
+		if (i === n) return true;
 	}
 }
 
-function has0(n) {
-	var st = ('' + n).split('');
-	return st.indexOf('0') > -1;
-}
-
-function isCircularPrime(n) {
-	if (has0(n)) return false; // 0이 포함된 경우 조건을 만족하지 못할 뿐 아니라 getCircularNumbers 실행시 문제가 되기도 한다.
-	return _.every(getCircularNumbers(n), isPrime);
-}
-
-function solve0() {
-	var i, result = 1;
-	for (i = 3; i < 1000000; i += 2) {
-		if (isCircularPrime(i)) result += 1;
+function solve035_1() {
+	var result = 1, max = 1000000;
+	for (var n = 3; n < max; n += 2) {
+		if (isCircularPrime(n)) result += 1;
 	}
 	return result;
 }
 
 (function(time) {
-	console.log('0: ' + solve0() + ' / ' + (new Date() - time));
+	console.log('         # 035_1: ' + solve035_1() + ' / ' + (new Date() - time));
 })(new Date());

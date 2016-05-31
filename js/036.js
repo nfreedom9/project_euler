@@ -7,20 +7,14 @@
  */
 
 var fn = require("./fn"),
-	isPalindrome = fn.isPalindrome,
-	sumOfIntArr = fn.sumOfIntArr;
+	isPalindrome = fn.isPalindrome;
 
-function solve036() {
-	var resultArr = [];
-	for (var i = 1; i < 1000001; i++) {
-		if (isPalindrome(i) && isPalindrome(i.toString(2))) {
-			resultArr.push(i);
-		}
-	}
-
-	return sumOfIntArr(resultArr);
+function solve036_1() {
+	var result = 0;
+	for (var i = 1; i < 1000000; i++) if (isPalindrome(i) && isPalindrome(i.toString(2))) result += i;
+	return result;
 }
 
 (function(time) {
-	console.log(' # 036: ' + solve036() + ' / ' + (new Date() - time));
+	console.log(' # 036_1: ' + solve036_1() + ' / ' + (new Date() - time));
 })(new Date());

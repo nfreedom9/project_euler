@@ -1,5 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 013 # # # # # # # # # # # # # # # # # # # #");
-
 /*
  13.
  Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
@@ -108,7 +106,7 @@ var target = [
 	53503534226472524250874054075591789781264330331690
 ];
 
-function my() {
+function solve013_1() {
 	var i, sum = 0;
 	for (i = 0; i < target.length; i++) {
 		sum += target[i];
@@ -117,5 +115,5 @@ function my() {
 }
 
 (function(time) {
-	console.log('m: ' + my() + ' / ' + my() + ' / ' + (new Date() - time));
+	console.log('     # 013_1: ' + solve013_1() + ' / ' + (new Date() - time));
 })(new Date());

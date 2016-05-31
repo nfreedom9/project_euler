@@ -1,9 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 028 # # # # # # # # # # # # # # # # # # # #");
-
-var fn = require("./fn"),
-	_ = fn._,
-	isPrime = fn.isPrime;
-
 /*
  28.
  Starting with the number 1 and moving to the right in a clockwise direction a 5 by 5 spiral is formed as follows:
@@ -19,22 +13,15 @@ var fn = require("./fn"),
  What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
  */
 
-function solve0(_n) {
-	var n = (_n - 1) / 2;
-	var sum = 1, last = 1;
-	for (var i = 1; i <= n; i++) {
+function solve028_1(n) {
+	var repeatCnt = (n - 1) / 2, sum = 1, last = 1;
+	for (var i = 1; i <= repeatCnt; i++) {
 		var d = 2 * i;
-		sum += (last += d);
-		sum += (last += d);
-		sum += (last += d);
-		sum += (last += d);
+		sum += (last += d) + (last += d) + (last += d) + (last += d);
 	}
 	return sum;
 }
 
-console.log(1+3+5+7+9+13+17+21+25);
-console.log(_.map([1,3,5], solve0)); // 101
-
 (function(time) {
-	console.log('0: ' + solve0(1001) + ' / ' + (new Date() - time));
+	console.log('     # 028_1: ' + solve028_1(5) + ' / ' + solve028_1(1001) + ' / ' + (new Date() - time));
 })(new Date());

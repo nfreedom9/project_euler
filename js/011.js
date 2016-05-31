@@ -1,5 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 011 # # # # # # # # # # # # # # # # # # # #");
-
 /*
  In the 20×20 grid below, four numbers along a diagonal line have been marked in red.
 
@@ -51,24 +49,25 @@ var target = [
 	'20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54'.split(' '),
 	'01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48'.split(' ')];
 
-function my() {
-	var result = 0, i, j;
-	function up_down(i, j) {
-		if (i > 16) return 0;
-		return target[i][j] * target[i + 1][j] * target[i + 2][j] * target[i + 3][j];
-	}
-	function left_right(i, j) {
-		if (j > 16) return 0;
-		return target[i][j] * target[i][j + 1] * target[i][j + 2] * target[i][j + 3];
-	}
-	function diagonally1(i, j) {
-		if (i > 16 || j > 16) return 0;
-		return target[i][j] * target[i + 1][j + 1] * target[i + 2][j + 2] * target[i + 3][j + 3];
-	}
-	function diagonally2(i, j) {
-		if (i < 3 || j > 16) return 0;
-		return target[i][j] * target[i - 1][j + 1] * target[i - 2][j + 2] * target[i - 3][j + 3];
-	}
+function solve011_1() {
+	var result = 0, i, j,
+		up_down = function(i, j) {
+			if (i > 16) return 0;
+			return target[i][j] * target[i + 1][j] * target[i + 2][j] * target[i + 3][j];
+		},
+		left_right = function(i, j) {
+			if (j > 16) return 0;
+			return target[i][j] * target[i][j + 1] * target[i][j + 2] * target[i][j + 3];
+		},
+		diagonally1 = function(i, j) {
+			if (i > 16 || j > 16) return 0;
+			return target[i][j] * target[i + 1][j + 1] * target[i + 2][j + 2] * target[i + 3][j + 3];
+		},
+		diagonally2 = function(i, j) {
+			if (i < 3 || j > 16) return 0;
+			return target[i][j] * target[i - 1][j + 1] * target[i - 2][j + 2] * target[i - 3][j + 3];
+		};
+
 	for (i = 0; i < 20; i++) {
 		for (j = 0; j < 20; j++) {
 			var p1 = up_down(i, j), p2 = left_right(i, j), p3 = diagonally1(i, j), p4 = diagonally2(i, j);
@@ -82,5 +81,5 @@ function my() {
 }
 
 (function(time) {
-	console.log('m: ' + my() + ' / ' + (new Date() - time));
+	console.log(' # 011_1: ' + solve011_1() + ' / ' + (new Date() - time));
 })(new Date());

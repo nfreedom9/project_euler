@@ -1,9 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 027 # # # # # # # # # # # # # # # # # # # #");
-
-var fn = require("./fn"),
-	_ = fn._,
-	isPrime = fn.isPrime;
-
 /*
  27.
  Euler discovered the remarkable quadratic formula:
@@ -23,36 +17,32 @@ var fn = require("./fn"),
  Find the product of the coefficients, a and b, for the quadratic expression that produces the maximum number of primes for consecutive values of n, starting with n = 0.
  */
 
-function getPrimesCnt(a, b) {
-	function getPrime(n) {
-		return n * n + (a * n) + b;
-	}
+var isPrime = require("./fn").isPrime;
 
-	for (var i = 0;;i++) {
-		var p = getPrime(i);
-		if (p < 0 || !isPrime(p)) return i;
-	}
+function getPrimesCnt(a, b) {
+	for (var n = 0; ; n++) if (!isPrime(n * n + (a * n) + b)) return n;
 }
 
-console.log(getPrimesCnt(1,41)); // 40
-console.log(getPrimesCnt(-79,1601)); // 80
+(function(s) {
+	if (!s) return;
+	console.log(getPrimesCnt(1, 41)); // 40
+	console.log(getPrimesCnt(-79, 1601)); // 80
+})();
 
-function solve0() {
-	var result = [-999,-999], temp = getPrimesCnt(-999,-999);
-	var cnt = 0;
+function solve027_1() {
+	var result, primesCnt = 0;
 	for (var a = -999; a < 1000; a++) {
 		for (var b = -999; b < 1000; b++) {
-			cnt++;
-			var primesCnt = getPrimesCnt(a,b);
-			if (primesCnt > temp) {
-				temp = primesCnt;
-				result = [a,b];
+			var thisPrimesCnt = getPrimesCnt(a, b);
+			if (thisPrimesCnt > primesCnt) {
+				primesCnt = thisPrimesCnt;
+				result = { a: a, b: b };
 			}
 		}
 	}
-	return result[0] * result[1];
+	return result.a * result.b;
 }
 
 (function(time) {
-	console.log('0: ' + solve0() + ' / ' + (new Date() - time));
+	console.log('   # 027_1: ' + solve027_1() + ' / ' + (new Date() - time));
 })(new Date());

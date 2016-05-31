@@ -1,5 +1,3 @@
-console.log("# # # # # # # # # # # # # # # # # # # # 009 # # # # # # # # # # # # # # # # # # # #");
-
 /*
  A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
 
@@ -13,8 +11,7 @@ console.log("# # # # # # # # # # # # # # # # # # # # 009 # # # # # # # # # # # #
 /*
  c = 1000 - a - b
 
- a^2 + b^2 = c^2 = (1000 - a - b)^2
- = 1000^2 + a^2 + b^2 + 2(ab - 1000a - 1000b)
+ a^2 + b^2 = c^2 = (1000 - a - b)^2 = 1000^2 + a^2 + b^2 + 2(ab - 1000a - 1000b)
 
  1000^2 + 2(ab - 1000a - 1000b) = 0
 
@@ -23,7 +20,7 @@ console.log("# # # # # # # # # # # # # # # # # # # # 009 # # # # # # # # # # # #
  1000(a+b) = 1000*500 + ab
  */
 
-function my() {
+function solve009_1() {
 	var sum = 1000, a, b, c;
 	for (a = 1; a <= sum - 2; a++) {
 		for (b = a + 1; b <= sum - 1; b++) {
@@ -36,5 +33,5 @@ function my() {
 }
 
 (function(time) {
-	console.log('m: ' + my() + ' / ' + (new Date() - time));
+	console.log('       # 009_1: ' + solve009_1(5) + ' / ' + (new Date() - time));
 })(new Date());

@@ -1,7 +1,7 @@
 /*
  The number 3797 has an interesting property.
  Being prime itself, it is possible to continuously remove digits from left to right,
-                                  and remain prime at each stage: 3797, 797, 97, and 7.
+ and remain prime at each stage: 3797, 797, 97, and 7.
  Similarly we can work from right to left: 3797, 379, 37, and 3.
 
  Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
@@ -15,15 +15,15 @@ var fn = require("./fn"),
 
 function isTruncatable(n) {
 	if (!isPrime(n)) return false;
-	var strN = n+"";
+	var strN = n + "";
 	for (var i = 1, l = strN.length; i < l; i++) {
-		if (!isPrime(parseInt(strN.slice(0,i)))) return false;
-		if (!isPrime(parseInt(strN.slice(i,l)))) return false;
+		if (!isPrime(parseInt(strN.slice(0, i), 10))) return false;
+		if (!isPrime(parseInt(strN.slice(i, l), 10))) return false;
 	}
 	return true;
 }
 
-function solve037() {
+function solve037_1() {
 	var resultArr = [];
 	for (var i = 23; ; i += 2) {
 		if (isTruncatable(i)) {
@@ -34,5 +34,5 @@ function solve037() {
 }
 
 (function(time) {
-	console.log('  # 037: ' + solve037() + ' / ' + (new Date() - time));
+	console.log('   # 037_1: ' + solve037_1() + ' / ' + (new Date() - time));
 })(new Date());

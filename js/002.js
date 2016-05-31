@@ -31,11 +31,9 @@ function solve002_2(limit) {
 }
 
 var q = 4 * 1000 * 1000;
-
 (function (time) {
 	console.log('   # 002_1: ' + solve002_1(q) + ' / ' + (new Date() - time));
 })(new Date());
-
 (function (time) {
 	console.log('   # 002_2: ' + solve002_2(q) + ' / ' + (new Date() - time));
 })(new Date());
