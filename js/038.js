@@ -11,12 +11,7 @@
  What is the largest 1 to 9 pandigital 9-digit number that can be formed as the concatenated product of an integer with (1,2, ... , n) where n > 1?
  */
 
-function isPandigital(n) {
-	var strN = n + "";
-	if (strN.length !== 9) return false;
-	for (var i = 1; i < 10; i++) if (strN.indexOf(i+"") < 0) return false;
-	return true;
-}
+var isPandigital = require("./fn").isPandigital;
 
 function concatenatedProduct(N) {
 	var result = "";

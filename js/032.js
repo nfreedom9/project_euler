@@ -9,14 +9,9 @@
  HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
  */
 
-var _ = require("./fn")._;
+var isPandigital = require("./fn").isPandigital;
 
 function solve032_1() {
-	function isPandigital(str) {
-		for (var i = 1; i < 10; i++) if (str.indexOf("" + i) < 0) return false;
-		return true;
-	}
-
 	function getPandigital(a) {
 		for (var b = 1; ; b++) {
 			var c = a * b, str = "" + a + b + c;

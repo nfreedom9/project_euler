@@ -287,4 +287,11 @@ fn.sumOfIntArr = function(intArr) {
 	return _.reduce(intArr, fn.sum, 0);
 };
 
+fn.isPandigital = function(n, limit) {
+	var str = n + '',  _limit = limit || 9;
+	if (str.length != _limit) return false;
+	for (var i = 1; i <= _limit; i++) if (str.indexOf("" + i) < 0) return false;
+	return true;
+};
+
 module.exports = fn;
