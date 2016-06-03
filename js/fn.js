@@ -288,10 +288,26 @@ fn.sumOfIntArr = function(intArr) {
 };
 
 fn.isPandigital = function(n, limit) {
-	var str = n + '',  _limit = limit || 9;
+	var str = n + '', _limit = limit || 9;
 	if (str.length != _limit) return false;
 	for (var i = 1; i <= _limit; i++) if (str.indexOf("" + i) < 0) return false;
 	return true;
+};
+
+fn.removeByIdx = function(arr, idx) {
+	return _.reject(arr, function() {
+		return idx == arguments[1];
+	});
+};
+
+var getPandigitalArr = fn.getPandigitalArr = function(arr) {
+	if (arr.length == 1) return arr;
+
+	return _.reduce(arr, function(acc, head, idx, arr) {
+		return acc.concat(_.map(getPandigitalArr(fn.removeByIdx(arr, idx)), function(tail) {
+			return [head].concat(tail);
+		}));
+	}, []);
 };
 
 module.exports = fn;
