@@ -13,8 +13,6 @@
  Find the next triangle number that is also pentagonal and hexagonal.
  */
 
-console.log('pen 45. ');
-
 /**
  * @return {number}
  */

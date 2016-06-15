@@ -35,7 +35,7 @@ function solve043_1() {
 											if (parseInt("" + d7 + d8 + d9, 10) % 13) return;
 											_.each(removeByIdx(arr, idx), function(d10) {
 												if (parseInt("" + d8 + d9 + d10, 10) % 17) return;
-												console.log("" + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8 + d9 + d10);
+												//console.log("" + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8 + d9 + d10);
 												result.push(parseInt("" + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8 + d9 + d10, 10));
 											});
 										});
@@ -57,7 +57,7 @@ function solve043_2() {
 
 	function run_front_rear(front, rear, last) {
 		if (!rear.length) {
-			console.log(front.join(""));
+			//console.log(front.join(""));
 			return last(parseInt(front.join(""), 10));
 		}
 
